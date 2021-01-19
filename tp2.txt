@@ -1,0 +1,108 @@
+1) db.Sportifs.find({"Nom":"KERVADEC"},{"IdSportifConseiller":1})
+2) db.Sportifs.find({"Nom":"KERVADEC"},{"Prenom":1})
+
+3) db.Sportifs.find({$or : [{"Age": 32}, {"Age":40}]},{"Prenom":1, "Age":1}).sort({"Age":1})
+
+
+
+4) db.Sportifs.find({"Sports.Jouer" : "Basket ball" },{"Nom":1})
+
+
+5) db.Sportifs.find({$or : [{"Age": 32}, {"Sexe": "F"}]},{"Nom":1,"Prenom":1, "Age":1, "Sexe":1}).sort({"Age":1})
+
+
+6) db.Sportifs.find({"Sexe":"F"}).count()
+
+7) db.Sportifs.find({"Age" : {$gte:20, $lte:30} },{"_id":1, "Nom":1, "Prenom":1, "Age":1} )
+
+
+8) db.Sportifs.find({"Sports.Jouer" : "Hand ball" },{"_IdSportif":1,"Nom":1})
+
+
+9) db.Gymnases.find({"$and":[{$or : [{"Ville": "VILLETANEUSE"}, {"Ville":"SARCELLES"}]},{"Surface": { $gte: 400}}]},{"Ville":1,"Surface":1})
+
+
+10) db.Gymnases.find("$and"[{"Seances.Libelle":"Hockey"},{"Seances.Jour":"mercredi"},{"Seances.Horaire":15}],{"NomGymnase":1})
+
+
+11) db.Sportifs.find({"Sports.Jouer" : null},{"Nom" : 1})
+
+12) db.Gymnases.find({"Seances.Jour" : {$ne : "dimanche"}})
+
+13) db.Gymnases.find(
+ {
+        "$nor": [
+            { "Seances.Libelle": { "$ne": "Basket ball" }},
+            { "Seances.Libelle": { "$ne": "Volley ball" }}
+        ]
+    },
+    {
+        "_id": 0,
+        "NomGymnase": 1,
+        "Ville": 1,
+        "Seances.Libelle": 1
+    }
+)
+
+14)  db.Sportifs.find(
+    {
+        "Sports.Jouer" : { "$exists" : true },
+        "Sports.Entrainer" : { "$exists" : true }
+    },
+    {
+        "_id": 0,
+        "Nom":  1
+    }
+)
+
+15) db.Sportifs.find(
+    {
+        "IdSportif": { "$in": db.Sportifs.distinct("IdSportifConseiller")}
+    },
+    {
+        "_id": 0,
+        "Nom":  1
+    }
+)
+16) db.Sportifs.find(
+    {
+        "IdSportif": db.Sportifs.find({ "Nom": "KERVADEC" })[0].IdSportifConseiller
+    },
+    {
+        "_id": 0,
+        "Sports": 0
+    }
+)
+
+17) 
+db.Sportifs.find(
+    {
+        "Sports.Entrainer": "Hand ball", 
+        "Sports.Entrainer": "Basket ball" 
+    },
+    {
+        "_id": 0,
+        "Nom": 1,
+        "Sports.Entrainer": 1
+    }
+)
+
+db.Sportifs.find(
+    {
+        $and: [
+            { "Sports.Entrainer": "Hand ball" }, 
+            { "Sports.Entrainer": "Basket ball" }
+        ]        
+    },
+    {
+        "_id": 0,
+        "Nom": 1,
+        "Sports.Entrainer": 1
+    }
+)
+
+18) db.Sportifs.find(
+
+	{
+		
+
